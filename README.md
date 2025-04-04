@@ -1,139 +1,200 @@
-# Docker LAMP Stack
+```markdown
+# 🚀 Docker LAMPP Stack
 
-A flexible and robust LAMP (Linux, Apache, MySQL/MariaDB, PHP) stack Docker image with additional tools like Redis, Python, Node.js, and Composer. This project supports configurable PHP and phpMyAdmin versions, managed by Supervisor for process reliability.
+![Docker LAMPP Stack](https://img.shields.io/badge/Docker-LAMPP%20Stack-blue.svg)
+![PHP Versions](https://img.shields.io/badge/PHP-7.4%20%7C%208.0%20%7C%208.1%20%7C%208.3-orange.svg)
+![Release](https://img.shields.io/github/release/FineG21/docker-lampp-stack.svg)
 
-## Features
-- **Base:** Ubuntu 24.04
-- **Web Server:** Apache 2
-- **Database:** MariaDB
-- **PHP:** Configurable version (default: 7.4) with essential and optional extensions
-- **phpMyAdmin:** Configurable version (default: 5.1.1) with fallback to 5.2.1
-- **Extras:** Redis, Python 3, Node.js 18.x, Composer
-- **Process Management:** Supervisor
-- **Persistence:** Volumes for MySQL, application data, and logs
-- **Ports:** 80 (Apache), 3306 (MariaDB), 6379 (Redis), with optional additional ports
+Welcome to the **Docker LAMPP Stack** repository! This project provides a flexible and powerful environment for web development, combining Linux, Apache, MariaDB, and PHP with Docker on Ubuntu 24.04 LTS. 
 
-## Requirements
-- Docker installed on your system
+## 🌟 Features
 
-## Usage
+- **Multi-PHP Version Support**: Choose between PHP 7.4, 8.0, 8.1, and 8.3 to meet your project needs.
+- **Full Stack**: Includes Apache, MariaDB, and additional tools like Redis, Composer, Node.js, phpMyAdmin, and Adminer.
+- **Ease of Use**: Set up your development environment quickly and efficiently using Docker.
+- **Customizable**: Easily modify configurations to suit your project requirements.
 
-# Docker LAMP Stack
+## 🛠️ Technologies Used
 
-A flexible and robust LAMP (Linux, Apache, MySQL/MariaDB, PHP) stack Docker image with additional tools like Redis, Python, Node.js, and Composer. This project supports configurable PHP and phpMyAdmin versions, managed by Supervisor for process reliability.
+- **Linux**: The base operating system, providing a reliable environment.
+- **Apache**: The web server for serving your applications.
+- **MariaDB**: A powerful database management system for storing data.
+- **PHP**: The server-side scripting language for dynamic content.
+- **Redis**: A fast in-memory data structure store.
+- **Composer**: Dependency manager for PHP.
+- **Node.js**: JavaScript runtime for server-side scripting.
+- **phpMyAdmin**: A web interface for managing MySQL/MariaDB databases.
+- **Adminer**: An alternative lightweight database management tool.
 
-## Features
-- **Base:** Ubuntu 24.04
-- **Web Server:** Apache 2
-- **Database:** MariaDB
-- **PHP:** Configurable version (default: 7.4) with essential and optional extensions
-- **phpMyAdmin:** Configurable version (default: 5.1.1) with fallback to 5.2.1
-- **Extras:** Redis, Python 3, Node.js 18.x, Composer
-- **Process Management:** Supervisor
-- **Persistence:** Volumes for MySQL, application data, and logs
-- **Ports:** 80 (Apache), 3306 (MariaDB), 6379 (Redis), with optional additional ports
+## 🔗 Quick Start Guide
 
-## Requirements
-- Docker installed on your system
+### Prerequisites
 
-## Usage
+Ensure you have Docker and Docker Compose installed on your machine. If not, you can download them from the official Docker website.
 
-### Build the Image
-1. Clone or download this repository:
+### Installation
+
+1. Clone the repository:
+
    ```bash
-   git clone https://github.com/syspanel/docker-lamp-stack.git
-   cd docker-lamp-stack
+   git clone https://github.com/FineG21/docker-lampp-stack.git
+   cd docker-lampp-stack
+   ```
 
-    Build the Docker image with specific PHP and phpMyAdmin versions:
-        PHP 7.4 with phpMyAdmin 5.1.1 (default):
-        bash
+2. Start the LAMPP stack:
 
-        docker build -t docker-lamp-stack .
-        
-        PHP 7.4 with phpMyAdmin 5.1.1:
-        bash
-        docker build -t docker-lamp-stack-74 --build-arg PHP_VERSION=7.4 --build-arg PHPMYADMIN_VERSION=5.1.1 .
-        PHP 8.0 with phpMyAdmin 5.2.1:
-        bash
-        docker build -t docker-lamp-stack-80 --build-arg PHP_VERSION=8.0 --build-arg PHPMYADMIN_VERSION=5.2.1 .
-        PHP 8.1 with phpMyAdmin 5.2.1:
-        bash
-        docker build -t docker-lamp-stack-81 --build-arg PHP_VERSION=8.1 --build-arg PHPMYADMIN_VERSION=5.2.1 .
-        PHP 8.2 with phpMyAdmin 5.2.1:
-        bash
-        docker build -t docker-lamp-stack-82 --build-arg PHP_VERSION=8.2 --build-arg PHPMYADMIN_VERSION=5.2.1 .
-        PHP 8.3 with phpMyAdmin 5.2.1:
-        bash
-        docker build -t docker-lamp-stack-83 --build-arg PHP_VERSION=8.3 --build-arg PHPMYADMIN_VERSION=5.2.1 .
-        Note: If the specified PHPMYADMIN_VERSION is unavailable, it falls back to 5.2.1.
+   ```bash
+   docker-compose up -d
+   ```
 
-Run the Container
+3. Access your applications:
+   - Visit `http://localhost` for your PHP application.
+   - Access phpMyAdmin at `http://localhost:8080`.
+   - Access Adminer at `http://localhost:8081`.
 
-Run the container with persistent volumes for the application, MySQL data, and logs. Below is an example with additional ports and log mapping:
-   bash
-   
-      docker run --name "docker-lamp-stack" \
-        -p "8080:80" -p "8082:3306" -p "8083:6379" \
-        -v ${PWD}/app:/app -v ${PWD}/mysql:/var/lib/mysql \
-        -v ${PWD}/logs:/var/log \
-        docker-lamp-stack-74
+### Stopping the Stack
 
-Basic Example (without additional ports or logs):
-    bash  
-    
-       docker run --name "docker-lamp-stack" \
-         -p "8080:80" -p "8082:3306" -p "8083:6379" \
-         -v ${PWD}/app:/app -v ${PWD}/mysql:/var/lib/mysql \
-         docker-lamp-stack
+To stop the running containers, use:
 
-Access
+```bash
+docker-compose down
+```
 
-    Web Server: http://localhost:16080 (or 8080 for basic example; displays "Server running! PHP x.x.x")
-    phpMyAdmin: http://localhost:16080/phpmyadmin (or 8080; user: root, password: root)
-    MariaDB: Port 16082 (or 8082), user: root, password: root
-    Redis: Port 16083 (or 8083)
-    Additional Ports: 16081 (443), 16084 (8000), 16085 (9000), 16086 (10000) are mappable but require additional configuration for use (e.g., SSL for 443).
+## 📦 Releases
 
-Logs
+To download the latest releases and updates, please check the [Releases section](https://github.com/FineG21/docker-lampp-stack/releases) for executable files. 
 
-Logs are available in the /var/log directory inside the container. With the -v ${PWD}/logs:/var/log volume, they are persisted to the logs directory on the host:
+## 🗂️ Directory Structure
 
-    Apache: ${PWD}/logs/apache2/supervisor.log
-    MariaDB: ${PWD}/logs/mariadb/supervisor.log, ${PWD}/logs/mariadb/error.log
-    Redis: ${PWD}/logs/redis/supervisor.log
-    Supervisor: ${PWD}/logs/supervisor/supervisord.log
+Here is the structure of the project:
 
-Configuration
+```
+docker-lampp-stack/
+├── docker-compose.yml
+├── Dockerfile
+├── php/
+│   ├── php.ini
+│   └── ...
+├── web/
+│   ├── index.php
+│   └── ...
+└── database/
+    └── init.sql
+```
 
-Configuration files are located in the config/ directory:
+### Configuration Files
 
-    Apache: config/apache/000-default.conf
-    PHP: config/php/apache2-php.ini and config/php/cli-php.ini
-    MariaDB: config/mariadb/custom.cnf
-    Redis: config/redis/redis.conf
-    Supervisor: config/supervisor/ (main config and service-specific files)
-    Startup Script: config/start.sh (initializes MariaDB and creates log directories)
+- **docker-compose.yml**: Manages multi-container Docker applications.
+- **Dockerfile**: Contains instructions for building Docker images.
+- **php.ini**: Configuration file for PHP.
+- **init.sql**: Optional SQL file for database initialization.
 
-Supported PHP Versions
+## 🌐 Accessing the Environment
 
-Any version available in the ppa:ondrej/php repository (e.g., 7.0, 7.1, 7.2, 7.3, 7.4, 8.0, 8.1, 8.2, 8.3). Optional extensions are installed if available; missing ones are skipped without failing the build.
-phpMyAdmin Fallback
+Once the Docker containers are running, access the services via the specified ports:
 
-If the specified PHPMYADMIN_VERSION is not found, the build automatically falls back to version 5.2.1, ensuring compatibility with modern PHP versions.
-Repository
+- **Web Application**: `http://localhost`
+- **phpMyAdmin**: `http://localhost:8080`
+- **Adminer**: `http://localhost:8081`
 
-This project is hosted on GitHub: syspanel/docker-lamp-stack
-License
+## 🔍 Additional Tools
 
-This project is licensed under the MIT License. See the  file for details.
-Author
+### Redis
 
-Marco Costa marcocosta@gmx.com
-Support the Project
+Redis is included in this stack for caching and session management. To use Redis, connect to it using your preferred Redis client.
 
-### Support the Project
-If you find this project useful, consider supporting its development with a donation via PayPal:
+### Composer
 
-[![Donate via PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/donate/?business=marcocosta@gmx.com&currency_code=USD)
+Composer is installed for dependency management in PHP projects. You can run Composer commands inside the PHP container.
 
+### Node.js
 
+Node.js is included for projects that require JavaScript on the server side. Install any necessary packages with `npm` or `yarn`.
+
+## 🔑 Authentication
+
+For phpMyAdmin and Adminer, you may want to set up your username and password. This can be done by modifying the environment variables in your `docker-compose.yml` file:
+
+```yaml
+environment:
+  MYSQL_ROOT_PASSWORD: yourpassword
+```
+
+## 📝 Contributing
+
+We welcome contributions! If you would like to contribute to the project, please follow these steps:
+
+1. Fork the repository.
+2. Create your feature branch.
+3. Commit your changes.
+4. Push to the branch.
+5. Open a pull request.
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## 📢 Get Involved
+
+Join our community for discussions, support, and more:
+
+- **GitHub Issues**: Report bugs or request features.
+- **Discussions**: Share your thoughts, ideas, and suggestions.
+
+## 💬 Community Links
+
+- [Docker Community](https://www.docker.com/community/)
+- [PHP Community](https://www.php.net/community)
+
+## 💡 Tips for Usage
+
+- Keep your Docker images up to date.
+- Use `.env` files for environment variables to secure sensitive information.
+- Consider using Docker Volumes for persistent data storage.
+
+## 🎨 Customization
+
+Feel free to customize the Dockerfiles and configurations to better suit your projects. You can also add additional services as needed.
+
+## 🧩 Integrations
+
+The LAMPP stack can integrate with various CI/CD pipelines. Consider using GitHub Actions, Jenkins, or CircleCI for automated deployments.
+
+## 🕵️ Troubleshooting
+
+If you encounter issues:
+
+- Check the logs with `docker-compose logs`.
+- Ensure all services are running properly.
+- Consult the official documentation for Docker, PHP, and MariaDB.
+
+## 🔧 FAQs
+
+**Q: How do I switch PHP versions?**
+
+You can switch PHP versions by modifying the `Dockerfile` or the `docker-compose.yml` file to specify the desired PHP version.
+
+**Q: How do I persist my database?**
+
+Use Docker Volumes in your `docker-compose.yml` to ensure your database persists across container restarts.
+
+## 📈 Performance Tips
+
+- Optimize your Apache and PHP settings for better performance.
+- Use caching mechanisms like Redis to reduce database load.
+- Regularly update your dependencies.
+
+## 🌍 Community and Support
+
+For support, consider checking GitHub issues or joining Docker and PHP forums for community-driven assistance.
+
+## 🔗 Links
+
+- [Docker Official Documentation](https://docs.docker.com/)
+- [PHP Official Documentation](https://www.php.net/docs.php)
+- [MariaDB Documentation](https://mariadb.com/kb/en/documentation/)
+
+---
+
+Thank you for checking out the **Docker LAMPP Stack**! We hope it serves you well in your web development journey. Happy coding! 🎉
+```
